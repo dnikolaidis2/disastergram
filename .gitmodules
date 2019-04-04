@@ -1,0 +1,12 @@
+[submodule "disastergram-applogic"]
+	path = disastergram-applogic
+	url = https://github.com/dnikolaidis2/disastergram-applogic
+[submodule "disastergram-auth"]
+	path = disastergram-auth
+	url = https://github.com/dnikolaidis2/disastergram-auth
+[submodule "disastergram-storage"]
+	path = disastergram-storage
+	url = https://github.com/dnikolaidis2/disastergram-storage
+[submodule "disastergram-web"]
+	path = disastergram-web
+	url = https://github.com/dnikolaidis2/disastergram-web
