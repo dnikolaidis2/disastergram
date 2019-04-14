@@ -8,8 +8,8 @@ services:
     depends_on:
       - db
 
-  # https://hub.docker.com/_/postgres 
-  db:
+  # https://hub.docker.com/_/postgres
+   db:
     image: postgres:11
     restart: always
     environment:
