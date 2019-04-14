@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  auth:
+    build: ./disastergram-auth
+    ports:
+      - "0.0.0.0:80:5000"
+    depends_on:
+      - db
+
+  # https://hub.docker.com/_/postgres
+  db:
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 1234
