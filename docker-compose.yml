@@ -9,7 +9,7 @@ services:
       - db
 
   # https://hub.docker.com/_/postgres 
-   db:
+  db:
     image: postgres:11
     restart: always
     environment:
