@@ -14,3 +14,13 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: 1234
+
+  api-frontend:
+    build: ./disastergram-web
+    volumes:
+     - './disastergram-web:/usr/src/app'
+     - '/usr/src/app/node_modules'
+    ports:
+     - '3000:3000'
+    environment:
+     - NODE_ENV=development
