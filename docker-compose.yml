@@ -4,16 +4,16 @@ services:
   auth:
     build: ./disastergram-auth
     ports:
-      - "0.0.0.0:80:5000"
+    - "0.0.0.0:80:5000"
     depends_on:
-      - db
+      - auth-db
 
-  # https://hub.docker.com/_/postgres 
-  db:
+  # https://hub.docker.com/_/postgres
+  auth-db:
     image: postgres:11
     restart: always
     environment:
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: disastergram
 
   api-frontend:
     build: ./disastergram-web
