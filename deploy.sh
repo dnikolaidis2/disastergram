@@ -1,9 +1,9 @@
 #!/bin/bash
 
-./scripts/generate_instances.sh
+./run_script_in_folder.sh generate_instance.py
 
 docker-compose down --remove-orphans
 
 docker-compose up --build --force-recreate -d
 
-./scripts/push_all.sh
+./run_script_in_folder.sh manage.py build all --push
