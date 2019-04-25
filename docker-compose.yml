@@ -4,7 +4,7 @@ services:
   auth:
     build: ./disastergram-auth
     ports:
-    - "0.0.0.0:80:5000"
+    - "5000:5000"
     depends_on:
       - auth-db
 
@@ -21,6 +21,6 @@ services:
      - './disastergram-web:/usr/src/app'
      - '/usr/src/app/node_modules'
     ports:
-     - '3000:3000'
+     - '80:3000'
     environment:
      - NODE_ENV=development
