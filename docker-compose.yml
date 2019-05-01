@@ -27,7 +27,7 @@ services:
     environment:
       POSTGRES_PASSWORD: disastergram
     volumes:
-      - auth-data:/var/lib/postgresql/
+      - auth-data:/var/lib/postgresql/data
     networks:
       - auth-net
 
