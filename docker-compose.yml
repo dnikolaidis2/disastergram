@@ -23,6 +23,8 @@ services:
   # https://hub.docker.com/_/postgres
   auth-db:
     image: postgres:11
+    ports:
+      - "6432:5432"
     restart: on-failure
     environment:
       POSTGRES_PASSWORD: disastergram
