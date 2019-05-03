@@ -5,7 +5,7 @@ services:
 # Backend
 
   auth:
-    build: ./disastergram-auth
+    image: dnikolaidis/disastergram-auth:latest
     ports:
       - "5000:5000"
     restart: on-failure
@@ -33,7 +33,7 @@ services:
       - auth-net
 
   app:
-    build: ./disastergram-applogic
+    image: dnikolaidis/disastergram-applogic:latest
     ports:
       - "5001:5000"
     restart: on-failure
@@ -96,9 +96,7 @@ services:
 # Frontend
 
   api-frontend:
-    build: ./disastergram-web
-    ports:
-      - "3000:3000"
+    image: dnikolaidis/disastergram-web:latest
     restart: on-failure
     volumes:
      - './disastergram-web:/usr/src/app'
@@ -120,6 +118,19 @@ services:
       - api-frontend
     networks:
       - proxy-net
+
+# Continual deployment
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 #Polling rate
+    restart: on-failure
+    depends_on:
+      - auth
+      - app
+      - api-frontend
 
 networks:
   auth-net:
