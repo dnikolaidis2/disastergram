@@ -99,6 +99,7 @@ services:
 
   api-frontend:
     build: ./disastergram-web
+    image: dnikolaidis/disastergram-web:latest
     restart: on-failure
     volumes:
      - './disastergram-web:/usr/src/app'
@@ -123,15 +124,16 @@ services:
 
 # Continual deployment
 
-  # watchtower:
-  #   image: containrrr/watchtower
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   command: --interval 30 #Polling rate
-  #   restart: on-failure
-  #   depends_on:
-  #     - auth
-  #     - api-frontend
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 #Polling rate
+    restart: on-failure
+    depends_on:
+      - auth
+      - app
+      - api-frontend
 
 networks:
   auth-net:
