@@ -40,6 +40,11 @@ services:
     depends_on:
       - app-db
       - auth
+      - storage_1
+      - storage_2
+      - storage_3
+      - storage_4
+      - storage_5
       - zoo1
       - zoo2
       - zoo3
@@ -56,6 +61,145 @@ services:
       POSTGRES_PASSWORD: 1234
     networks:
       - app-net
+
+# storage zoo
+
+  storage_1:
+    image: dnikolaidis/disastergram-storage:nginx
+    ports:
+      - "5002:80"
+    depends_on:
+      - storage_redis_1
+      - zoo1
+      - zoo2
+      - zoo3
+    environment:
+      STORAGE_ID: 1
+      BASEURL: http://localhost/storage/1/
+      DOCKER_HOST: storage_1:80
+      REDIS_HOST: storage_redis_1
+    networks:
+      - storage-zoo-net
+      - app-net
+      - proxy-net
+      - zoo-net
+
+  storage_redis_1:
+    image: redis:5.0
+    volumes:
+      - storage_redis_1_data:/data
+    networks:
+      - storage-zoo-net
+
+  storage_2:
+    image: dnikolaidis/disastergram-storage:nginx
+    ports:
+      - "5003:80"
+    depends_on:
+      - storage_redis_2
+      - zoo1
+      - zoo2
+      - zoo3
+    environment:
+      STORAGE_ID: 2
+      BASEURL: http://localhost/storage/2/
+      DOCKER_HOST: storage_2:80
+      REDIS_HOST: storage_redis_2
+    networks:
+      - storage-zoo-net
+      - app-net
+      - proxy-net
+      - zoo-net
+
+  storage_redis_2:
+    image: redis:5.0
+    volumes:
+      - storage_redis_2_data:/data
+    networks:
+      - storage-zoo-net
+
+  storage_3:
+    image: dnikolaidis/disastergram-storage:nginx
+    ports:
+      - "5004:80"
+    depends_on:
+      - storage_redis_3
+      - zoo1
+      - zoo2
+      - zoo3
+    environment:
+      STORAGE_ID: 3
+      BASEURL: http://localhost/storage/3/
+      DOCKER_HOST: storage_3:80
+      REDIS_HOST: storage_redis_3
+    networks:
+      - storage-zoo-net
+      - app-net
+      - proxy-net
+      - zoo-net
+
+  storage_redis_3:
+    image: redis:5.0
+    volumes:
+      - storage_redis_3_data:/data
+    networks:
+      - storage-zoo-net
+
+  storage_4:
+    image: dnikolaidis/disastergram-storage:nginx
+    ports:
+      - "5005:80"
+    depends_on:
+      - storage_redis_4
+      - zoo1
+      - zoo2
+      - zoo3
+    environment:
+      STORAGE_ID: 4
+      BASEURL: http://localhost/storage/4/
+      DOCKER_HOST: storage_4:80
+      REDIS_HOST: storage_redis_4
+    networks:
+      - storage-zoo-net
+      - app-net
+      - proxy-net
+      - zoo-net
+
+  storage_redis_4:
+    image: redis:5.0
+    volumes:
+      - storage_redis_4_data:/data
+    networks:
+      - storage-zoo-net
+
+  storage_5:
+    image: dnikolaidis/disastergram-storage:nginx
+    ports:
+      - "5006:80"
+    depends_on:
+      - storage_redis_5
+      - zoo1
+      - zoo2
+      - zoo3
+    environment:
+      STORAGE_ID: 5
+      BASEURL: http://localhost/storage/5/
+      DOCKER_HOST: storage_5:80
+      REDIS_HOST: storage_redis_5
+    networks:
+      - storage-zoo-net
+      - app-net
+      - proxy-net
+      - zoo-net
+
+  storage_redis_5:
+    image: redis:5.0
+    volumes:
+      - storage_redis_5_data:/data
+    networks:
+      - storage-zoo-net
+
+# the actual zoo
 
   zoo1:
     image: zookeeper:3.4
@@ -116,6 +260,11 @@ services:
     depends_on:
       - auth
       - api-frontend
+      - storage_1
+      - storage_2
+      - storage_3
+      - storage_4
+      - storage_5
     networks:
       - proxy-net
 
@@ -137,6 +286,12 @@ networks:
   app-net:
   zoo-net:
   proxy-net:
+  storage-zoo-net:
 
 volumes:
   auth-data:
+  storage_redis_1_data:
+  storage_redis_2_data:
+  storage_redis_3_data:
+  storage_redis_4_data:
+  storage_redis_5_data:
