@@ -68,6 +68,9 @@ services:
     image: dnikolaidis/disastergram-storage:nginx
     ports:
       - "5002:80"
+    volumes:
+      - storage_1_image_data:/app/storage/images
+    restart: on-failure
     depends_on:
       - storage_redis_1
       - zoo1
@@ -86,6 +89,7 @@ services:
 
   storage_redis_1:
     image: redis:5.0
+    restart: on-failure
     volumes:
       - storage_redis_1_data:/data
     networks:
@@ -95,6 +99,9 @@ services:
     image: dnikolaidis/disastergram-storage:nginx
     ports:
       - "5003:80"
+    volumes:
+      - storage_2_image_data:/app/storage/images
+    restart: on-failure
     depends_on:
       - storage_redis_2
       - zoo1
@@ -113,6 +120,7 @@ services:
 
   storage_redis_2:
     image: redis:5.0
+    restart: on-failure
     volumes:
       - storage_redis_2_data:/data
     networks:
@@ -122,6 +130,9 @@ services:
     image: dnikolaidis/disastergram-storage:nginx
     ports:
       - "5004:80"
+    volumes:
+      - storage_3_image_data:/app/storage/images
+    restart: on-failure
     depends_on:
       - storage_redis_3
       - zoo1
@@ -140,6 +151,7 @@ services:
 
   storage_redis_3:
     image: redis:5.0
+    restart: on-failure
     volumes:
       - storage_redis_3_data:/data
     networks:
@@ -149,6 +161,9 @@ services:
     image: dnikolaidis/disastergram-storage:nginx
     ports:
       - "5005:80"
+    volumes:
+      - storage_4_image_data:/app/storage/images
+    restart: on-failure
     depends_on:
       - storage_redis_4
       - zoo1
@@ -167,6 +182,7 @@ services:
 
   storage_redis_4:
     image: redis:5.0
+    restart: on-failure
     volumes:
       - storage_redis_4_data:/data
     networks:
@@ -176,6 +192,9 @@ services:
     image: dnikolaidis/disastergram-storage:nginx
     ports:
       - "5006:80"
+    volumes:
+      - storage_5_image_data:/app/storage/images
+    restart: on-failure
     depends_on:
       - storage_redis_5
       - zoo1
@@ -194,6 +213,7 @@ services:
 
   storage_redis_5:
     image: redis:5.0
+    restart: on-failure
     volumes:
       - storage_redis_5_data:/data
     networks:
@@ -260,6 +280,7 @@ services:
     depends_on:
       - auth
       - api-frontend
+      - app
       - storage_1
       - storage_2
       - storage_3
@@ -290,6 +311,11 @@ networks:
 
 volumes:
   auth-data:
+  storage_1_image_data:
+  storage_2_image_data:
+  storage_3_image_data:
+  storage_4_image_data:
+  storage_5_image_data:
   storage_redis_1_data:
   storage_redis_2_data:
   storage_redis_3_data:
