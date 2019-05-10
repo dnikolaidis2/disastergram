@@ -57,6 +57,8 @@ services:
   app-db:
     image: postgres:11
     restart: on-failure
+    volumes:
+      - app-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: 1234
     networks:
@@ -311,6 +313,7 @@ networks:
 
 volumes:
   auth-data:
+  app-data:
   storage_1_image_data:
   storage_2_image_data:
   storage_3_image_data:
