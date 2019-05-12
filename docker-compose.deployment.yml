@@ -9,6 +9,12 @@ services:
     ports:
       - "5000:5000"
     restart: on-failure
+    environment:
+      POSTGRES_HOST: auth-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "${AUTH_DB_PASSWORD}"
+      BASEURL: "http://${HOSTNAME}/api"
+      DOCKER_HOST: auth:5000
     depends_on:
       - auth-db
       - zoo1
@@ -26,7 +32,7 @@ services:
       - "6432:5432"
     restart: on-failure
     environment:
-      POSTGRES_PASSWORD: disastergram
+      POSTGRES_PASSWORD: "${AUTH_DB_PASSWORD}"
     volumes:
       - auth-data:/var/lib/postgresql/data
     networks:
@@ -76,7 +82,7 @@ services:
       - zoo3
     environment:
       STORAGE_ID: 1
-      BASEURL: http://localhost/storage/1/
+      BASEURL: "http://${HOSTNAME}/storage/1/"
       DOCKER_HOST: storage_1:80
       REDIS_HOST: storage_redis_1
     networks:
@@ -108,7 +114,7 @@ services:
       - zoo3
     environment:
       STORAGE_ID: 2
-      BASEURL: http://localhost/storage/2/
+      BASEURL: "http://${HOSTNAME}/storage/2/"
       DOCKER_HOST: storage_2:80
       REDIS_HOST: storage_redis_2
     networks:
@@ -140,7 +146,7 @@ services:
       - zoo3
     environment:
       STORAGE_ID: 3
-      BASEURL: http://localhost/storage/3/
+      BASEURL: "http://${HOSTNAME}/storage/3/"
       DOCKER_HOST: storage_3:80
       REDIS_HOST: storage_redis_3
     networks:
@@ -172,7 +178,7 @@ services:
       - zoo3
     environment:
       STORAGE_ID: 4
-      BASEURL: http://localhost/storage/4/
+      BASEURL: "http://${HOSTNAME}/storage/4/"
       DOCKER_HOST: storage_4:80
       REDIS_HOST: storage_redis_4
     networks:
@@ -204,7 +210,7 @@ services:
       - zoo3
     environment:
       STORAGE_ID: 5
-      BASEURL: http://localhost/storage/5/
+      BASEURL: "http://${HOSTNAME}/storage/5/"
       DOCKER_HOST: storage_5:80
       REDIS_HOST: storage_redis_5
     networks:
