@@ -5,16 +5,21 @@ services:
 # Backend
 
   auth:
-    image: dnikolaidis/disastergram-auth:latest
+    image: dnikolaidis/disastergram-auth:nginx
     ports:
-      - "5000:5000"
+      - "5000:80"
     restart: on-failure
     environment:
       POSTGRES_HOST: auth-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${AUTH_DB_PASSWORD}"
       BASEURL: "http://${HOSTNAME}/api"
-      DOCKER_HOST: auth:5000
+      DOCKER_HOST: auth:80
+      FLASK_APP: /app/auth
+      FLASK_APP_MIGRATIONS: /app/migrate/mirations
+      FLASK_APP_INSTANCE: /app/instance
+    volumes:
+      - ./disastergram-auth/migrate:/app/migrate
     depends_on:
       - auth-db
       - zoo1
