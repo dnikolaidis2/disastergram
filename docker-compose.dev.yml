@@ -15,7 +15,7 @@ services:
       POSTGRES_HOST: auth-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${AUTH_DB_PASSWORD}"
-      BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
+      BASEURL: "${URL_SCHEME}://${HOSTNAME}/auth"
       DOCKER_HOST: auth:80
       FLASK_APP: /app/auth
       FLASK_APP_MIGRATIONS: /app/migrate/migrations
@@ -45,6 +45,12 @@ services:
     ports:
       - "5001:5000"
     restart: on-failure
+    environment:
+      POSTGRES_HOST: app-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "${APP_DB_PASSWORD}"
+      BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
+      DOCKER_HOST: app:5000
     volumes:
       - ./disastergram-applogic:/user/src/app
     depends_on:
