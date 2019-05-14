@@ -18,10 +18,9 @@ services:
       BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
       DOCKER_HOST: auth:80
       FLASK_APP: /app/auth
-      FLASK_APP_MIGRATIONS: /app/migrate/migrations
       FLASK_APP_INSTANCE: /app/instance
     volumes:
-      - ./disastergram-auth/migrate:/app/migrate
+      - ./disastergram-auth:/user/src/app
     depends_on:
       - auth-db
       - zoo1
@@ -44,6 +43,8 @@ services:
     ports:
       - "5001:5000"
     restart: on-failure
+    volumes:
+      - ./disastergram-applogic:/user/src/app
     depends_on:
       - app-db
       - auth
@@ -59,7 +60,7 @@ services:
     volumes:
       - app-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: "${APP_DB_PASSWORD}"
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
 
 # storage zoo
 
@@ -71,6 +72,7 @@ services:
       - "5002:80"
     volumes:
       - storage_1_image_data:/app/storage/images
+      - ./disastergram-storage:/user/src/app
     restart: on-failure
     depends_on:
       - storage_redis_1
@@ -98,6 +100,7 @@ services:
       - "5003:80"
     volumes:
       - storage_2_image_data:/app/storage/images
+      - ./disastergram-storage:/user/src/app
     restart: on-failure
     depends_on:
       - storage_redis_2
@@ -125,6 +128,7 @@ services:
       - "5004:80"
     volumes:
       - storage_3_image_data:/app/storage/images
+      - ./disastergram-storage:/user/src/app
     restart: on-failure
     depends_on:
       - storage_redis_3
@@ -152,6 +156,7 @@ services:
       - "5005:80"
     volumes:
       - storage_4_image_data:/app/storage/images
+      - ./disastergram-storage:/user/src/app
     restart: on-failure
     depends_on:
       - storage_redis_4
@@ -179,6 +184,7 @@ services:
       - "5006:80"
     volumes:
       - storage_5_image_data:/app/storage/images
+      - ./disastergram-storage:/user/src/app
     restart: on-failure
     depends_on:
       - storage_redis_5
@@ -194,7 +200,6 @@ services:
 
   storage_redis_5:
     image: redis:5.0
-    restart: on-failure
     volumes:
       - storage_redis_5_data:/data
 
