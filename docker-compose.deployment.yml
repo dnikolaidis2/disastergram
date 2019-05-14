@@ -50,7 +50,6 @@ services:
       DOCKER_HOST: app:5000
     depends_on:
       - app-db
-      - auth
       - zoo1
       - zoo2
       - zoo3
@@ -76,7 +75,6 @@ services:
     restart: on-failure
     depends_on:
       - storage_redis_1
-      - app
       - zoo1
       - zoo2
       - zoo3
@@ -101,7 +99,6 @@ services:
     restart: on-failure
     depends_on:
       - storage_redis_2
-      - app
       - zoo1
       - zoo2
       - zoo3
@@ -126,7 +123,6 @@ services:
     restart: on-failure
     depends_on:
       - storage_redis_3
-      - app
       - zoo1
       - zoo2
       - zoo3
@@ -151,7 +147,6 @@ services:
     restart: on-failure
     depends_on:
       - storage_redis_4
-      - app
       - zoo1
       - zoo2
       - zoo3
@@ -176,7 +171,6 @@ services:
     restart: on-failure
     depends_on:
       - storage_redis_5
-      - app
       - zoo1
       - zoo2
       - zoo3
