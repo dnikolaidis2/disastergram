@@ -18,9 +18,11 @@ services:
       BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
       DOCKER_HOST: auth:80
       FLASK_APP: /app/auth
+      FLASK_APP_MIGRATIONS: /app/migrate/migrations
       FLASK_APP_INSTANCE: /app/instance
     volumes:
       - ./disastergram-auth:/user/src/app
+      - ./disastergram-auth/migrate:/app/migrate
     depends_on:
       - auth-db
       - zoo1
