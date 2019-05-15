@@ -51,6 +51,7 @@ services:
       POSTGRES_PASSWORD: "${APP_DB_PASSWORD}"
       BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
       DOCKER_HOST: app:5000
+      AUTH_CONFIG_FROM_ZOO: "True"
     volumes:
       - ./disastergram-applogic:/user/src/app
     depends_on:

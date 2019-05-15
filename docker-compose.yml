@@ -40,16 +40,24 @@ services:
       - auth-data:/var/lib/postgresql/data
 
   app:
-    build: ./disastergram-applogic
+    build:
+      context: ./disastergram-applogic
+      dockerfile: Dockerfile-nginx
     ports:
-      - "5001:5000"
+      - "5001:80"
     restart: on-failure
     environment:
       POSTGRES_HOST: app-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${APP_DB_PASSWORD}"
       BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
-      DOCKER_HOST: app:5000
+      DOCKER_HOST: app:80
+      AUTH_CONFIG_FROM_ZOO: "True"
+      FLASK_APP_INSTANCE: /app/instance
+      FLASK_APP: /app/app
+      FLASK_APP_MIGRATIONS: /app/migrate/migrations
+    volumes:
+        - ./disastergram-applogic/migrate:/app/migrate
     depends_on:
       - app-db
       - zoo1
@@ -256,7 +264,7 @@ services:
     environment:
       NGINX_HOST: "${HOSTNAME}"
       AUTH_URL: http://auth:80/
-      API_URL: http://app:5000
+      API_URL: http://app:80
       FRONTEND_URL: http://frontend:3000
       STORAGE_1_URL: http://storage_1:80/
       STORAGE_2_URL: http://storage_2:80/

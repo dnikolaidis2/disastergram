@@ -48,6 +48,12 @@ services:
       POSTGRES_PASSWORD: "${APP_DB_PASSWORD}"
       BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
       DOCKER_HOST: app:5000
+      AUTH_CONFIG_FROM_ZOO: "True"
+      FLASK_APP_INSTANCE: /app/instance
+      FLASK_APP: /app/app
+      FLASK_APP_MIGRATIONS: /app/migrate/migrations
+    volumes:
+        - ./disastergram-applogic/migrate:/app/migrate
     depends_on:
       - app-db
       - zoo1
@@ -242,7 +248,7 @@ services:
     environment:
       NGINX_HOST: "${HOSTNAME}"
       AUTH_URL: http://auth:80/
-      API_URL: http://app:5000
+      API_URL: http://app:80
       FRONTEND_URL: http://frontend:3000
       STORAGE_1_URL: http://storage_1:80/
       STORAGE_2_URL: http://storage_2:80/
