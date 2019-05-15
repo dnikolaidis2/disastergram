@@ -38,7 +38,7 @@ services:
       - auth-data:/var/lib/postgresql/data
 
   app:
-    image: dnikolaidis/disastergram-applogic:latest
+    image: dnikolaidis/disastergram-applogic:nginx
     ports:
       - "5001:5000"
     restart: on-failure
