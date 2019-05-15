@@ -241,13 +241,12 @@ services:
 # Frontend
 
   frontend:
-    build: ./disastergram-web
+    build:
+      context: ./disastergram-web
+      dockerfile: Dockerfile-nginx
     ports:
-      - "3000:3000"
+      - "3000:80"
     restart: on-failure
-    volumes:
-     - './disastergram-web:/usr/src/app'
-     - '/usr/src/app/node_modules'
     depends_on:
       - auth
       - app
@@ -256,8 +255,6 @@ services:
       - storage_3
       - storage_4
       - storage_5
-    environment:
-     - NODE_ENV=development
 
   reverse-proxy:
     image: nginx:1.16
@@ -265,7 +262,7 @@ services:
       NGINX_HOST: "${HOSTNAME}"
       AUTH_URL: http://auth:80/
       API_URL: http://app:80
-      FRONTEND_URL: http://frontend:3000
+      FRONTEND_URL: http://frontend:80
       STORAGE_1_URL: http://storage_1:80/
       STORAGE_2_URL: http://storage_2:80/
       STORAGE_3_URL: http://storage_3:80/
