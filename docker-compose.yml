@@ -44,7 +44,8 @@ services:
     ports:
       - "5001:5000"
     restart: on-failure
-    POSTGRES_HOST: app-db
+    environment:
+      POSTGRES_HOST: app-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${APP_DB_PASSWORD}"
       BASEURL: "${URL_SCHEME}://${HOSTNAME}/api"
