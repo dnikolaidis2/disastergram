@@ -23,6 +23,7 @@ services:
       FLASK_APP: /app/auth
       FLASK_APP_MIGRATIONS: /app/migrate/migrations
       FLASK_APP_INSTANCE: /app/instance
+      UWSGI_CHEAPER: 4
     volumes:
       - ./disastergram-auth/migrate:/app/migrate
     depends_on:
@@ -62,6 +63,7 @@ services:
       FLASK_APP_INSTANCE: /app/instance
       FLASK_APP: /app/app
       FLASK_APP_MIGRATIONS: /app/migrate/migrations
+      UWSGI_CHEAPER: 4
     volumes:
         - ./disastergram-applogic/migrate:/app/migrate
     depends_on:
@@ -99,6 +101,8 @@ services:
       BASEURL: "http://disastergram.network/storage/1/"
       DOCKER_HOST: storage_1:80
       REDIS_HOST: storage_redis_1
+      NGINX_WORKER_PROCESSES: 4
+      UWSGI_CHEAPER: 4
     volumes:
       - storage_1_image_data:/app/storage/images
     depends_on:
@@ -132,6 +136,8 @@ services:
       BASEURL: "http://disastergram.network/storage/2/"
       DOCKER_HOST: storage_2:80
       REDIS_HOST: storage_redis_2
+      NGINX_WORKER_PROCESSES: 4
+      UWSGI_CHEAPER: 4
     volumes:
       - storage_2_image_data:/app/storage/images
     depends_on:
@@ -165,6 +171,8 @@ services:
       BASEURL: "http://disastergram.network/storage/3/"
       DOCKER_HOST: storage_3:80
       REDIS_HOST: storage_redis_3
+      NGINX_WORKER_PROCESSES: 4
+      UWSGI_CHEAPER: 4
     volumes:
       - storage_3_image_data:/app/storage/images
     depends_on:
@@ -198,6 +206,8 @@ services:
       BASEURL: "http://disastergram.network/storage/4/"
       DOCKER_HOST: storage_4:80
       REDIS_HOST: storage_redis_4
+      NGINX_WORKER_PROCESSES: 4
+      UWSGI_CHEAPER: 4
     volumes:
       - storage_4_image_data:/app/storage/images
     depends_on:
@@ -231,6 +241,8 @@ services:
       BASEURL: "http://disastergram.network/storage/5/"
       DOCKER_HOST: storage_5:80
       REDIS_HOST: storage_redis_5
+      NGINX_WORKER_PROCESSES: 4
+      UWSGI_CHEAPER: 4
     volumes:
       - storage_5_image_data:/app/storage/images
     depends_on:
@@ -298,7 +310,7 @@ services:
     image: dnikolaidis/disastergram-web:nginx
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 4
       restart_policy:
         condition: on-failure
       update_config:
@@ -317,7 +329,7 @@ services:
     image: nginx:1.16
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 4
       restart_policy:
         condition: on-failure
       update_config:
