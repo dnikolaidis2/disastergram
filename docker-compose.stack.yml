@@ -1,0 +1,370 @@
+version: '3.7'
+
+services:
+
+# Backend
+
+  auth:
+    image: dnikolaidis/disastergram-auth:nginx
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      POSTGRES_HOST: auth-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: disastergram
+      BASEURL: "http://disastergram.network/auth"
+      DOCKER_HOST: auth:80
+      FLASK_APP: /app/auth
+      FLASK_APP_MIGRATIONS: /app/migrate/migrations
+      FLASK_APP_INSTANCE: /app/instance
+    volumes:
+      - ./disastergram-auth/migrate:/app/migrate
+    depends_on:
+      - auth-db
+      - zoo1
+      - zoo2
+      - zoo3
+
+  # https://hub.docker.com/_/postgres
+  auth-db:
+    image: postgres:11
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      POSTGRES_PASSWORD: disastergram
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+
+  app:
+    image: dnikolaidis/disastergram-applogic:nginx
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      POSTGRES_HOST: app-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      BASEURL: "http://disastergram.network/api"
+      DOCKER_HOST: app:5000
+      AUTH_CONFIG_FROM_ZOO: "True"
+      FLASK_APP_INSTANCE: /app/instance
+      FLASK_APP: /app/app
+      FLASK_APP_MIGRATIONS: /app/migrate/migrations
+    volumes:
+        - ./disastergram-applogic/migrate:/app/migrate
+    depends_on:
+      - auth
+      - app-db
+      - zoo1
+      - zoo2
+      - zoo3
+
+  app-db:
+    image: postgres:11
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - app-data:/var/lib/postgresql/data
+
+# storage zoo
+
+  storage_1:
+    image: dnikolaidis/disastergram-storage:nginx
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      STORAGE_ID: 1
+      BASEURL: "http://disastergram.network/storage/1/"
+      DOCKER_HOST: storage_1:80
+      REDIS_HOST: storage_redis_1
+    volumes:
+      - storage_1_image_data:/app/storage/images
+    depends_on:
+      - app
+      - storage_redis_1
+      - zoo1
+      - zoo2
+      - zoo3
+
+  storage_redis_1:
+    image: redis:5.0
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    volumes:
+      - storage_redis_1_data:/data
+
+  storage_2:
+    image: dnikolaidis/disastergram-storage:nginx
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      STORAGE_ID: 2
+      BASEURL: "http://disastergram.network/storage/2/"
+      DOCKER_HOST: storage_2:80
+      REDIS_HOST: storage_redis_2
+    volumes:
+      - storage_2_image_data:/app/storage/images
+    depends_on:
+      - app
+      - storage_redis_2
+      - zoo1
+      - zoo2
+      - zoo3
+
+  storage_redis_2:
+    image: redis:5.0
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    volumes:
+      - storage_redis_2_data:/data
+
+  storage_3:
+    image: dnikolaidis/disastergram-storage:nginx
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      STORAGE_ID: 3
+      BASEURL: "http://disastergram.network/storage/3/"
+      DOCKER_HOST: storage_3:80
+      REDIS_HOST: storage_redis_3
+    volumes:
+      - storage_3_image_data:/app/storage/images
+    depends_on:
+      - app
+      - storage_redis_3
+      - zoo1
+      - zoo2
+      - zoo3
+
+  storage_redis_3:
+    image: redis:5.0
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    volumes:
+      - storage_redis_3_data:/data
+
+  storage_4:
+    image: dnikolaidis/disastergram-storage:nginx
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      STORAGE_ID: 4
+      BASEURL: "http://disastergram.network/storage/4/"
+      DOCKER_HOST: storage_4:80
+      REDIS_HOST: storage_redis_4
+    volumes:
+      - storage_4_image_data:/app/storage/images
+    depends_on:
+      - app
+      - storage_redis_4
+      - zoo1
+      - zoo2
+      - zoo3
+
+  storage_redis_4:
+    image: redis:5.0
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    volumes:
+      - storage_redis_4_data:/data
+
+  storage_5:
+    image: dnikolaidis/disastergram-storage:nginx
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      STORAGE_ID: 5
+      BASEURL: "http://disastergram.network/storage/5/"
+      DOCKER_HOST: storage_5:80
+      REDIS_HOST: storage_redis_5
+    volumes:
+      - storage_5_image_data:/app/storage/images
+    depends_on:
+      - app
+      - storage_redis_5
+      - zoo1
+      - zoo2
+      - zoo3
+
+  storage_redis_5:
+    image: redis:5.0
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    volumes:
+      - storage_redis_5_data:/data
+
+# the actual zoo
+
+  zoo1:
+    image: zookeeper:3.4
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    hostname: zoo1
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    
+  zoo2:
+    image: zookeeper:3.4
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    hostname: zoo2
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    
+  zoo3:
+    image: zookeeper:3.4
+    deploy:
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    hostname: zoo3
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+
+# Frontend
+
+  frontend:
+    image: dnikolaidis/disastergram-web:nginx
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    depends_on:
+      - auth
+      - app
+      - storage_1
+      - storage_2
+      - storage_3
+      - storage_4
+      - storage_5
+
+  reverse-proxy:
+    image: nginx:1.16
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+    ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+    environment:
+      NGINX_HOST: disastergram.network
+      AUTH_URL: http://auth:80/
+      API_URL: http://app:80
+      FRONTEND_URL: http://frontend:80
+      STORAGE_1_URL: http://storage_1:80/
+      STORAGE_2_URL: http://storage_2:80/
+      STORAGE_3_URL: http://storage_3:80/
+      STORAGE_4_URL: http://storage_4:80/
+      STORAGE_5_URL: http://storage_5:80/
+    volumes:
+      - ./conf/nginx.template:/etc/nginx/nginx.template
+      - ./conf/ssl.template:/etc/nginx/ssl.template
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    command: /bin/bash -c 
+             "envsubst '$$NGINX_HOST $$API_URL $$AUTH_URL $$FRONTEND_URL $$STORAGE_1_URL $$STORAGE_2_URL $$STORAGE_3_URL $$STORAGE_4_URL $$STORAGE_5_URL' 
+             < /etc/nginx/nginx.template > /etc/nginx/nginx.conf &&
+             envsubst '\${NGINX_HOST}' < /etc/nginx/ssl.template > /etc/nginx/ssl.conf &&
+             exec nginx -g 'daemon off;'"
+    depends_on:
+      - auth
+      - frontend
+      - app
+      - storage_1
+      - storage_2
+      - storage_3
+      - storage_4
+      - storage_5
+
+volumes:
+  auth-data:
+  app-data:
+  storage_1_image_data:
+  storage_2_image_data:
+  storage_3_image_data:
+  storage_4_image_data:
+  storage_5_image_data:
+  storage_redis_1_data:
+  storage_redis_2_data:
+  storage_redis_3_data:
+  storage_redis_4_data:
+  storage_redis_5_data:
