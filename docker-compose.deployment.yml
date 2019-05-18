@@ -55,6 +55,7 @@ services:
     volumes:
         - ./disastergram-applogic/migrate:/app/migrate
     depends_on:
+      - auth
       - app-db
       - zoo1
       - zoo2
@@ -80,6 +81,7 @@ services:
       - storage_1_image_data:/app/storage/images
     restart: on-failure
     depends_on:
+      - app
       - storage_redis_1
       - zoo1
       - zoo2
@@ -104,6 +106,7 @@ services:
       - storage_2_image_data:/app/storage/images
     restart: on-failure
     depends_on:
+      - app
       - storage_redis_2
       - zoo1
       - zoo2
@@ -128,6 +131,7 @@ services:
       - storage_3_image_data:/app/storage/images
     restart: on-failure
     depends_on:
+      - app
       - storage_redis_3
       - zoo1
       - zoo2
@@ -152,6 +156,7 @@ services:
       - storage_4_image_data:/app/storage/images
     restart: on-failure
     depends_on:
+      - app
       - storage_redis_4
       - zoo1
       - zoo2
@@ -176,6 +181,7 @@ services:
       - storage_5_image_data:/app/storage/images
     restart: on-failure
     depends_on:
+      - app
       - storage_redis_5
       - zoo1
       - zoo2
