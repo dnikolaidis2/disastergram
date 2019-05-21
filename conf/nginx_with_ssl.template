@@ -4,8 +4,16 @@ events {
 
 http {
   server {
-    server_name  ${NGINX_HOST};
-    listen 80;
+      listen         80;
+      server_name    ${NGINX_HOST} www.${NGINX_HOST};
+      return         301 https://${NGINX_HOST}$request_uri;
+      return         301 https://www.${NGINX_HOST}$request_uri;
+  }
+
+  server {
+    listen 443 ssl;
+    server_name  ${NGINX_HOST} www.${NGINX_HOST};
+    include /etc/nginx/ssl.conf;
     client_max_body_size 20M;
 
     location /api {

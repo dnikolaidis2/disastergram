@@ -361,7 +361,7 @@ services:
       - /etc/letsencrypt/:/etc/letsencrypt/
     command: /bin/bash -c 
              "envsubst '$$NGINX_HOST $$API_URL $$AUTH_URL $$FRONTEND_URL $$STORAGE_1_URL $$STORAGE_2_URL $$STORAGE_3_URL $$STORAGE_4_URL $$STORAGE_5_URL' 
-             < /etc/nginx/nginx.template > /etc/nginx/nginx.conf &&
+             < /etc/nginx/nginx_with_ssl.template > /etc/nginx/nginx.conf &&
              envsubst '$$NGINX_HOST' < /etc/nginx/ssl.template > /etc/nginx/ssl.conf &&
              exec nginx -g 'daemon off;'"
     depends_on:
