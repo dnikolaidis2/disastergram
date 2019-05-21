@@ -374,6 +374,17 @@ services:
       - storage_4
       - storage_5
 
+    shepherd:
+    image: mazzolino/shepherd
+    environment:
+       SLEEP_TIME: "1m"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+        - node.role == manager
+
 volumes:
   auth-data:
   app-data:
