@@ -17,7 +17,8 @@ https://docs.docker.com/compose/install/
 
 Clone repository and submodules:
 ```
-git clone https://github.com/dnikolaidis2/Disastergram
+git clone https://github.com/dnikolaidis2/disastergram
+cd disastergram
 git submodule init
 git submodule update
 ```
