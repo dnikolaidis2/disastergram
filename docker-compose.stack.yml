@@ -356,7 +356,7 @@ services:
       STORAGE_4_URL: http://storage_4:80/
       STORAGE_5_URL: http://storage_5:80/
     volumes:
-      - ./conf/nginx.template:/etc/nginx/nginx.template
+      - ./conf/nginx_with_ssl.template:/etc/nginx/nginx_with_ssl.template
       - ./conf/ssl.template:/etc/nginx/ssl.template
       - /etc/letsencrypt/:/etc/letsencrypt/
     command: /bin/bash -c 

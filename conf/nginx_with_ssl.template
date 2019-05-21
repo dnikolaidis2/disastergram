@@ -4,10 +4,10 @@ events {
 
 http {
   server {
-      listen         80;
-      server_name    ${NGINX_HOST} www.${NGINX_HOST};
-      return         301 https://${NGINX_HOST}$request_uri;
-      return         301 https://www.${NGINX_HOST}$request_uri;
+    listen         80;
+    server_name    ${NGINX_HOST} www.${NGINX_HOST};
+    return         301 https://${NGINX_HOST}$request_uri;
+    return         301 https://www.${NGINX_HOST}$request_uri;
   }
 
   server {
