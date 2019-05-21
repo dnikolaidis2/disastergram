@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# git submodule init
+git submodule init
 
 git config submodule.disastergram-auth.url git@github.com:dnikolaidis2/disastergram-auth.git
 git config submodule.disastergram-web.url git@github.com:dnikolaidis2/disastergram-web.git
