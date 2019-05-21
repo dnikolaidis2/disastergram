@@ -28,6 +28,11 @@ ___WARNING!___ This is a very important step as it generates all public/private 
 ./run_script_in_folder.sh generate_instance.py
 ```
 
+Make folders to store migrations
+```
+mkdir -p disastergram-{applogic,auth}/migrate
+```
+
 Copy project configuration file and edit as desired:
 ```
 mv example.env .env
