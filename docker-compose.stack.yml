@@ -26,6 +26,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
       - ./disastergram-auth/migrate:/app/migrate
+      - ./disastergram-auth/instance/config.py:/app/instance/config.py
     depends_on:
       - auth-db
       - zoo1
@@ -66,6 +67,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
         - ./disastergram-applogic/migrate:/app/migrate
+        - ./disastergram-applogic/instance/config.py:/app/instance/config.py
     depends_on:
       - auth
       - app-db
@@ -105,6 +107,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
       - storage_1_image_data:/app/storage/images
+      - ./disastergram-storage/instance/config.py:/app/instance/config.py
     depends_on:
       - app
       - storage_redis_1
@@ -140,6 +143,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
       - storage_2_image_data:/app/storage/images
+      - ./disastergram-storage/instance/config.py:/app/instance/config.py
     depends_on:
       - app
       - storage_redis_2
@@ -175,6 +179,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
       - storage_3_image_data:/app/storage/images
+      - ./disastergram-storage/instance/config.py:/app/instance/config.py
     depends_on:
       - app
       - storage_redis_3
@@ -210,6 +215,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
       - storage_4_image_data:/app/storage/images
+      - ./disastergram-storage/instance/config.py:/app/instance/config.py
     depends_on:
       - app
       - storage_redis_4
@@ -245,6 +251,7 @@ services:
       UWSGI_CHEAPER: 4
     volumes:
       - storage_5_image_data:/app/storage/images
+      - ./disastergram-storage/instance/config.py:/app/instance/config.py
     depends_on:
       - app
       - storage_redis_5
