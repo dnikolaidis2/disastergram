@@ -374,7 +374,7 @@ services:
       - storage_4
       - storage_5
 
-    shepherd:
+  shepherd:
     image: mazzolino/shepherd
     environment:
        SLEEP_TIME: "1m"
