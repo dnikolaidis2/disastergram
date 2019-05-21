@@ -10,7 +10,7 @@ date -d "+2 hours"
 
 # docker-compose up --build -d
 
-./run_script_in_folder.sh manage.py build all --push
+./run_script_in_folder.sh docker-manager.py build all --push
 
 date -d "+2 hours"
 echo "build.sh ended"
