@@ -14,7 +14,7 @@ http {
     listen 443 ssl;
     server_name  ${NGINX_HOST} www.${NGINX_HOST};
     include /etc/nginx/ssl.conf;
-    client_max_body_size 20M;
+    client_max_body_size 30M;
 
     location /api {
     	proxy_pass ${API_URL};

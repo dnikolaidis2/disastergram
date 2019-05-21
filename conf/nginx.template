@@ -6,7 +6,7 @@ http {
   server {
     server_name  ${NGINX_HOST};
     listen 80;
-    client_max_body_size 20M;
+    client_max_body_size 30M;
 
     location /api {
     	proxy_pass ${API_URL};
