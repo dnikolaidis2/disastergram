@@ -18,7 +18,7 @@ services:
       POSTGRES_HOST: auth-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: disastergram
-      BASEURL: "http://disastergram.network/auth"
+      BASEURL: "https://disastergram.network/auth"
       DOCKER_HOST: auth:80
       FLASK_APP: /app/auth
       FLASK_APP_MIGRATIONS: /app/migrate/migrations
@@ -58,7 +58,7 @@ services:
       POSTGRES_HOST: app-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
-      BASEURL: "http://disastergram.network/api"
+      BASEURL: "https://disastergram.network/api"
       DOCKER_HOST: app:5000
       AUTH_CONFIG_FROM_ZOO: "True"
       FLASK_APP_INSTANCE: /app/instance
@@ -100,7 +100,7 @@ services:
         delay: 10s
     environment:
       STORAGE_ID: 1
-      BASEURL: "http://disastergram.network/storage/1/"
+      BASEURL: "https://disastergram.network/storage/1/"
       DOCKER_HOST: storage_1:80
       REDIS_HOST: storage_redis_1
       NGINX_WORKER_PROCESSES: 4
@@ -136,7 +136,7 @@ services:
         delay: 10s
     environment:
       STORAGE_ID: 2
-      BASEURL: "http://disastergram.network/storage/2/"
+      BASEURL: "https://disastergram.network/storage/2/"
       DOCKER_HOST: storage_2:80
       REDIS_HOST: storage_redis_2
       NGINX_WORKER_PROCESSES: 4
@@ -172,7 +172,7 @@ services:
         delay: 10s
     environment:
       STORAGE_ID: 3
-      BASEURL: "http://disastergram.network/storage/3/"
+      BASEURL: "https://disastergram.network/storage/3/"
       DOCKER_HOST: storage_3:80
       REDIS_HOST: storage_redis_3
       NGINX_WORKER_PROCESSES: 4
@@ -208,7 +208,7 @@ services:
         delay: 10s
     environment:
       STORAGE_ID: 4
-      BASEURL: "http://disastergram.network/storage/4/"
+      BASEURL: "https://disastergram.network/storage/4/"
       DOCKER_HOST: storage_4:80
       REDIS_HOST: storage_redis_4
       NGINX_WORKER_PROCESSES: 4
@@ -244,7 +244,7 @@ services:
         delay: 10s
     environment:
       STORAGE_ID: 5
-      BASEURL: "http://disastergram.network/storage/5/"
+      BASEURL: "https://disastergram.network/storage/5/"
       DOCKER_HOST: storage_5:80
       REDIS_HOST: storage_redis_5
       NGINX_WORKER_PROCESSES: 4
@@ -362,7 +362,7 @@ services:
     command: /bin/bash -c 
              "envsubst '$$NGINX_HOST $$API_URL $$AUTH_URL $$FRONTEND_URL $$STORAGE_1_URL $$STORAGE_2_URL $$STORAGE_3_URL $$STORAGE_4_URL $$STORAGE_5_URL' 
              < /etc/nginx/nginx.template > /etc/nginx/nginx.conf &&
-             envsubst '\${NGINX_HOST}' < /etc/nginx/ssl.template > /etc/nginx/ssl.conf &&
+             envsubst '$$NGINX_HOST' < /etc/nginx/ssl.template > /etc/nginx/ssl.conf &&
              exec nginx -g 'daemon off;'"
     depends_on:
       - auth
