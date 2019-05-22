@@ -37,6 +37,7 @@ services:
   auth-db:
     image: postgres:11
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
     environment:
@@ -78,6 +79,7 @@ services:
   app-db:
     image: postgres:11
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
       update_config:
@@ -118,6 +120,7 @@ services:
   storage_redis_1:
     image: redis:5.0
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
       update_config:
@@ -154,6 +157,7 @@ services:
   storage_redis_2:
     image: redis:5.0
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
       update_config:
@@ -190,6 +194,7 @@ services:
   storage_redis_3:
     image: redis:5.0
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
       update_config:
@@ -226,6 +231,7 @@ services:
   storage_redis_4:
     image: redis:5.0
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
       update_config:
@@ -262,6 +268,7 @@ services:
   storage_redis_5:
     image: redis:5.0
     deploy:
+      endpoint_mode: dnsrr
       restart_policy:
         condition: on-failure
       update_config:
