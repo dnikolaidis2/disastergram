@@ -1,6 +1,6 @@
 # Disastergram
 
-This project is part for the distributed systems course ΠΛΗ414 at the Teachnical of Crete. It implements a distributed system for image sharing between users.
+This project is part for the distributed systems course ΠΛΗ414 at the Technical of Crete. It implements a distributed system for image sharing between users.
 
 Project presentation:
 https://drive.google.com/open?id=1aOTOBFq-uxNMoKeHxriBZuYeOWk1wa0BXbLOjQSJ7qc
